@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/xeicon.min.css">
+<link rel="stylesheet" type="text/css" href="../css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="../css/select2-bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css?v=4">
+<script src="../js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+<script src="../js/navbar.js">
+</script>
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light pb-2 pb-md-0">
+<a class="navbar-brand" href="../marte/main"><img class="logo" src="../img/logo.png"></a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="navbar-collapse collapse" id="navbarSupportedContent">
+<ul id="navbar" class="navbar-nav mr-auto">
+<li  class="nav-item  mt-2 mt-md-0" >
+<a class="nav-link" href="../marte/main">메인</a>
+</li>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="../marte/notification">공지사항</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="../marte/characters">캐릭터</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="../marte/weapon">장비</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="../marte/event">이벤트</a>
+</li>
+</ul>
+</div>
+</nav>

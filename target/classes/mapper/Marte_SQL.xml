@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Marte">
+
+<insert id="insert_ch" parameterType="hashmap">
+<![CDATA[insert into ch_table values (#{CH_NAME},#{CH_ING},#{CH_H_CHACK},CH_SEQ.nextval,#{CH_STAR},#{CH_SO})]]>
+</insert>
+
+<insert id="insert_we" parameterType="hashmap">
+<![CDATA[insert into we_table values (#{WE_NAME},#{WE_ING},#{WE_H_CHACK},WE_SEQ.nextval,#{WE_STAR},#{WE_SO})]]></insert>
+
+<insert id="insert_not" parameterType="hashmap">
+<![CDATA[insert into we_table values (NOT_SEQ.nextval,#{NOT_CONTEXT},#{NOT_DATE},#{NOT_TITLE})]]></insert>
+
+<insert id="insert_ev" parameterType="hashmap">
+<![CDATA[
+insert into event_table values (EV_SEQ.nextval,#{EV_GACH_NAME},#{EV_GACH_CONTEXT},#{EV_GACH_START},#{EV_GACH_END},#{EV_GACH_COLOR},#{WE_NAMES},#{CH_NAMES})]]></insert>
+
+<insert id="insert_ch_gacha" parameterType="hashmap">
+<![CDATA[
+insert into ch_gach values (CH_GACHA_SEQ.nextval,#{CH_GACH_NAME},#{CH_GACH_CONTEXT},#{CH_GACH_START},#{CH_GACH_END},#{CH_GACH_COLOR},#{CH_NAMES})]]></insert>
+
+<insert id="insert_we_gacha" parameterType="hashmap">
+<![CDATA[
+insert into we_gach values (WE_GACHA_SEQ.nextval,#{WE_GACH_NAME},#{WE_GACH_CONTEXT},#{WE_GACH_START},#{WE_GACH_END},#{WE_GACH_COLOR},#{WE_NAMES})]]></insert>
+
+<select id="select_ch"  resultType="hashmap">
+<![CDATA[
+SELECT CH_NAME,CH_IMG,CH_H_CHACK FROM CH_TABLE]]></select>
+
+<select id="select_not"  resultType="hashmap">
+<![CDATA[
+SELECT NOT_NO,NOT_DATE,NOT_TITLE FROM NOTIFICATIONPAGE]]></select>
+
+
+
+
+<select id="select_we" resultType="hashmap">
+<![CDATA[
+SELECT WE_NAME,WE_IMG,WE_H_CHACK FROM WE_TABLE
+]]></select>
+
+<select id="select_ev" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,GACH_CONTEXT,to_char(gach_start,'YYYY-MM-DD') gach_start,
+to_char(gach_end+1,'YYYY-MM-DD') gach_end,to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,CH_NAMES,
+to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM EVENT_TABLE ORDER BY gach_start]]></select>
+
+<select id="select_all"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,x.gach_no,x.gach_name,to_char(x.gach_start,'YYYY-MM-DD') gach_start,to_char(x.gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(x.gach_end,'YYYY-MM-DD') end,to_DATE(x.gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY",
+x.gach_color from(SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM ch_gach UNION ALL
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM we_gach UNION All 
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM event_table ORDER by GACH_START) X
+]]></select>
+
+<select id="select_ch_gacha" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,CH_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM CH_GACH  ORDER BY gach_start
+]]></select>
+
+<select id="select_we_gacha"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM WE_GACH  ORDER BY gach_start
+]]></select>
+
+<select id="select_all_soon"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,x.gach_no,x.gach_name,to_char(x.gach_start,'YYYY-MM-DD') gach_start,to_char(x.gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(x.gach_end,'YYYY-MM-DD') end,to_DATE(x.gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY",
+x.gach_color from(SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM ch_gach UNION ALL
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM we_gach UNION All 
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM event_table ORDER by GACH_START) X WHERE sysdate < gach_start
+]]></select>
+
+<select id="select_ev_soon" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,GACH_CONTEXT,to_char(gach_start,'YYYY-MM-DD') gach_start,
+to_char(gach_end+1,'YYYY-MM-DD') gach_end,to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,CH_NAMES,
+to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM EVENT_TABLE WHERE sysdate < gach_start ORDER BY gach_start]]></select>
+
+<select id="select_ch_gacha_soon" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,CH_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM CH_GACH WHERE sysdate < gach_start ORDER BY gach_start
+]]></select>
+
+<select id="select_we_gacha_soon"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM WE_GACH  
+WHERE sysdate < gach_start ORDER BY gach_start
+]]></select>
+ 
+ <select id="select_all_now"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,x.gach_no,x.gach_name,to_char(x.gach_start,'YYYY-MM-DD') gach_start,to_char(x.gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(x.gach_end,'YYYY-MM-DD') end,to_DATE(x.gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY",
+x.gach_color from(SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM ch_gach UNION ALL
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM we_gach UNION All 
+SELECT GACH_NO,GACH_NAME,GACH_CONTEXT,GACH_START,GACH_END,GACH_COLOR FROM event_table ORDER by GACH_START) X WHERE sysdate > gach_start AND sysdate < gach_end
+]]></select>
+<select id="select_ev_now" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,GACH_CONTEXT,to_char(gach_start,'YYYY-MM-DD') gach_start,
+to_char(gach_end+1,'YYYY-MM-DD') gach_end,to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,CH_NAMES,
+to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM EVENT_TABLE WHERE sysdate > gach_start AND sysdate < gach_end ORDER BY gach_start]]></select>
+
+<select id="select_ch_gacha_now" resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,CH_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM CH_GACH  
+WHERE sysdate > gach_start AND sysdate < gach_end ORDER BY gach_start
+]]></select>
+
+<select id="select_we_gacha_now"  resultType="hashmap">
+<![CDATA[
+SELECT ROWNUM,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end+1,'YYYY-MM-DD') gach_end,
+to_char(gach_end,'YYYY-MM-DD') end,GACH_COLOR,WE_NAMES,to_DATE(gach_start,'YYYY-MM-DD') - to_DATE(sysdate,'YYYY-MM-DD') as "DDAY" FROM WE_GACH  
+WHERE sysdate > gach_start AND sysdate < gach_end ORDER BY gach_start
+]]></select>
+
+<select id="ev_detail" parameterType="hashmap"  resultType="hashmap">
+<![CDATA[
+SELECT GACH_IMG,GACH_NO,GACH_NAME,GACH_CONTEXT,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end,'YYYY-MM-DD') gach_end,WE_NAMES,CH_NAMES FROM EVENT_TABLE WHERE GACH_NO = #{GACH_NO}
+]]></select>
+
+<select id="not_detail" parameterType="hashmap"  resultType="hashmap">
+<![CDATA[
+SELECT NOT_NO,NOT_CONTEXT,NOT_DATE,NOT_TITLE FROM NOTIFICATIONPAGE WHERE NOT_NO = #{NOT_NO}
+]]></select>
+
+<select id="ch_gacha_detail" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+SELECT GACH_IMG,GACH_NO,GACH_NAME,GACH_CONTEXT,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end,'YYYY-MM-DD') gach_end,CH_NAMES FROM CH_GACH WHERE GACH_NO = #{GACH_NO}
+]]></select>
+
+<select id="we_gacha_detail" parameterType="hashmap"  resultType="hashmap">
+<![CDATA[
+SELECT GACH_IMG,GACH_NO,GACH_NAME,to_char(gach_start,'YYYY-MM-DD') gach_start,to_char(gach_end,'YYYY-MM-DD') gach_end,GACH_COLOR,WE_NAMES FROM WE_GACH WHERE GACH_NO = #{GACH_NO}
+]]></select>
+
+<delete id="ch_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM CH_TABLE WHERE CH_NO = #{CH_NO}]]>
+</delete>
+<delete id="not_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM NOTIFICATIONPAGE WHERE NOT_NO = #{NOT_NO}]]>
+</delete>
+<delete id="we_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM WE_TABLE WHERE WE_NO = #{WE_NO}]]>
+</delete>
+<delete id="ev_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM EV_TABLE WHERE EV_GACH_NO = #{GACH_NO}]]> 
+</delete>
+<delete id="ch_gach_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM CH_TABLE WHERE CH_GACH_NO = #{GACH_NO}]]>
+</delete>
+<delete id="we_gach_delete" parameterType="hashmap">
+<![CDATA[DELETE FROM WE_TABLE WHERE WE_GACH_NO = #{GACH_NO}]]>
+</delete>
+<delete id="ev_end_delete">
+<![CDATA[DELETE FROM EV_TABLE WHERE EV_GACH_END < SYSDATE]]>
+</delete>
+<delete id="we_end_delete">
+<![CDATA[DELETE FROM WE_TABLE WHERE WE_GACH_END < SYSDATE]]>
+</delete>
+<delete id="ch_end_delete">
+<![CDATA[DELETE FROM CH_TABLE WHERE CH_GACH_END < SYSDATE]]>
+</delete>
+
+<update id="ch_update" parameterType="hashmap">
+<![CDATA[ update ch_table SET CH_NAME = #{CH_NAME},CH_IMG = #{CH_IMG},CH_H_CHACK = #{CH_H_CHACK},CH_STAR= #{CH_STAR},CH_SO = #{CH_SO} WHERE CH_NO = #{CH_NO} ]]>
+</update>
+<update id="not_update" parameterType="hashmap">
+<![CDATA[ update NOTIFICATIONPAGE SET NOT_CONTEXT = #{NOT_CONTEXT},NOT_TITLE = #{NOT_TITLE} WHERE NOT_NO = #{NOT_NO} ]]>
+</update>
+<update id="we_update" parameterType="hashmap">
+<![CDATA[ update we_table SET WE_NAME = #{WE_NAME},WE_IMG = #{WE_IMG},WE_H_CHACK = #{WE_H_CHACK},WE_STAR= #{WE_STAR},WE_SO = #{WE_SO} WHERE WE_NO = #{WE_NO} ]]>
+</update>
+<update id="ev_update" parameterType="hashmap">
+<![CDATA[
+update event_table set 
+EV_GACH_NAME =#{EV_GACH_NAME},EV_GACH_CONTEXT = #{EV_GACH_CONTEXT},EV_GACH_START = #{EV_GACH_START},EV_GACH_END = #{EV_GACH_END},EV_GACH_COLOR=#{EV_GACH_COLOR},WE_NAMES=#{WE_NAMES},CH_NAMES=#{CH_NAMES} WHERE GACH_NO = #{GACH_NO} ]]>
+</update>
+<update id="ch_gach_update" parameterType="hashmap">
+<![CDATA[
+update CH_GACH set 
+CH_GACH_NAME =#{CH_GACH_NAME},CH_GACH_CONTEXT = #{CH_GACH_CONTEXT},CH_GACH_START = #{CH_GACH_START},CH_GACH_END = #{CH_GACH_END},CH_GACH_COLOR=#{CH_GACH_COLOR},CH_NAMES=#{CH_NAMES} WHERE GACH_NO = #{GACH_NO]]>
+</update>
+<update id="we_gach_update" parameterType="hashmap">
+<![CDATA[
+update WE_GACH set 
+WE_GACH_NAME =#{WE_GACH_NAME},WE_GACH_CONTEXT = #{WE_GACH_CONTEXT},WE_GACH_START = #{WE_GACH_START},WE_GACH_END = #{WE_GACH_END},WE_GACH_COLOR=#{WE_GACH_COLOR},WE_NAMES=#{WE_NAMES} WHERE GACH_NO = #{GACH_NO]]>
+</update>
+
+</mapper>
