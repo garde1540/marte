@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/xeicon.min.css">
+<link rel="stylesheet" type="text/css" href="../css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="../css/select2-bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css?v=4">
+<link rel="stylesheet" type="text/css" href="../css/skin.min.css">
+<script src="../js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
+<script src="../js/navbar_admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+<script src="https://cdn.tiny.cloud/1/bgfqewmgrncjr4yg39swy6hc7srhhbf1wzx2x5cgmg9keevp/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light pb-2 pb-md-0">
+<a class="navbar-brand" href="/marte/main"><img class="logos" src="../img/logo.png"></a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="navbar-collapse collapse" id="navbarSupportedContent">
+<ul id="navbar" class="navbar-nav mr-auto">
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/notification">공지사항 추가</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/cal_characters">캐릭터 일정 추가</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/cal_weapon">장비 일정 추가</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/characters">캐릭터 추가</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/weapon">장비 추가</a>
+<li class="nav-item  mt-2 mt-md-0">
+<a class="nav-link" href="/admin/cal_event">이벤트 일정 추가</a>
+</li>
+</ul>
+</div>
+</nav>
