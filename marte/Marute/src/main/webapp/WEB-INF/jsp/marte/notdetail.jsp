@@ -9,7 +9,7 @@
 <%@ include file="/WEB-INF/Include/navbar.jspf"%>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항</title>
 </head>
 <body>
 <div class="container" style="padding-top: 121px">
